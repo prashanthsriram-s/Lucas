@@ -82,7 +82,7 @@ fragment StringLiteral
     ;
 
 fragment StringLiteralBody
-    : CharacterLiteralBody+
+    : CharacterLiteralBody*
     ;
 
 fragment BooleanLiteral
