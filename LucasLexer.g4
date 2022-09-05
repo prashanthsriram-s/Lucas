@@ -61,7 +61,7 @@ fragment ExponentialPart
     ;
 
 fragment PositiveExponentialPart
-    : [eE] [+]? Digit
+    : [eE] [+]? Digit+
     ;
 
 // Unicode characters or wide characters are not supported in Lucas
