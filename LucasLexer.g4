@@ -1,6 +1,8 @@
-grammar LucasLexer;
+lexer grammar LucasLexer;
 
-breaksym : 'break';
+
+
+Break : 'break';
 
 
 
