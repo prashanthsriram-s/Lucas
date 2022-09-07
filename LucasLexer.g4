@@ -2,18 +2,43 @@ lexer grammar LucasLexer;
 
 
 //1. Keywords
+Begin : 'begin';
+BigInt : 'bigint';
 Break : 'break';
+Decl: 'decl';
+Expr: 'expr';
+Public: 'public';
+Private: 'private';
+TypeOf: 'typeof';
+Vector: 'vector';
+Case : 'case';
+Char : 'char';
+Class : 'class';
+CharSeq : 'charseq';
+Continue : 'continue';
+Double : 'double';
+Function: 'function';
+Else : 'else';
+End : 'end';
+For : 'for';
+Int : 'int';
+If : 'if';
+Return : 'return';
+Switch : 'switch';
+Void : 'void';
+While : 'while';
 
 
-fragment 
-Digit
+//fragments so that defining things like identifier naming conventions becomes a lot cleaner
+//and human readable
+fragment Digit
     : [0-9]
     ;
 
-fragment
-IDNonDigit
+fragment IDNonDigit
     : [a-zA-Z_]
     ;
+
 Identifier
     :   IDNonDigit
         (   IDNonDigit
@@ -76,9 +101,10 @@ fragment CharacterLiteralBody
 
 fragment SimpleEscapeSequence
     :   '\\' ['"?nrtv\\]
+    ;
 
 fragment StringLiteral
-    : '\"' StringLiteralBody '\"'
+    : '"' StringLiteralBody '"'
     ;
 
 fragment StringLiteralBody
@@ -90,31 +116,60 @@ fragment BooleanLiteral
     ;
 
 // 3. Operators
-Add : ‘+’;
-Sub : ‘-’;
-Mult : ‘*’;
-Div : ‘/’;
-Mod : ‘%’;
-Exponent : ‘^’;
-LessThan : ‘<’;
-GreaterThan : ‘>’;
-Equality : ‘==’; //We can change the name of the token later on maybe?
-Inequality : ‘!=’;
-LessThanEqual : ‘<=’;
-GreaterThanEqual : ‘>=’;
-LogicalAnd : ‘&&’;
-LogicalOr : ‘||’;
-LogicalNot : ‘!’;
-Dot : ‘.’;             //Change if needed
-Arrow : ‘->’;
-Assign : ‘=’;
-ClassSpec : ‘::’;
-LeftParen : ‘(‘ ;
-RightParen : ‘)’ ;
-LeftBrac : ‘[‘ ;
-RightBrac : ‘]’ ;
-SemiColon : ‘;’ ;
-Comma : ‘,’ ;
+Add : '+';
+Sub : '-';
+Mult : '*';
+Div : '/';
+Mod : '%';
+Exponent : '^';
+LessThan : '<';
+GreaterThan : '>';
+Equality : '==';    
+Inequality : '!=';
+LessThanEqual : '<=';
+GreaterThanEqual : '>=';
+LogicalAnd : '&&';
+LogicalOr : '||';
+LogicalNot : '!';
+Dot : '.';             
+Arrow : '->';
+ClassSpec : '::';
+LeftParen : '(' ;
+RightParen : ')' ;
+LeftBrac : '[' ;
+RightBrac : ']' ;
+SemiColon : ';' ;
+Comma : ',' ;
+Increment: '++';
+Decrement: '--';
+RightShift: '>>';
+LeftShift: '<<';
+
+//assignment operators, which include compound assignment here 
+Assign : '=';
+LeftShiftEqual : '<<=';
+RightShiftEqual : '>>=';
+PlusEqual : '+=';
+MinusEqual : '-=';
+MultEqual : '*=';
+
+
+//trig expression, this will be used in the grammar later to define the expression whose
+//<TE> must be taken. 
+TE 
+    : 'sin'
+    | 'cos'
+    | 'tan'
+    | 'asin' 
+    | 'acos' 
+    | 'atan'
+    ;
+
+//logarithmic expression, similar applications to TE (trig expression) above.
+LE 
+    : 'log'
+    | 'ln'
+    ;
 
 
 
