@@ -121,6 +121,7 @@ Sub : '-';
 Mult : '*';
 Div : '/';
 Mod : '%';
+Tilde: '~';
 Exponent : '^';
 LessThan : '<';
 GreaterThan : '>';
