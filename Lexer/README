@@ -1,3 +1,1 @@
-To Use the Makefile, you need to download the antlr-4.11.1-complete.jar file from antlr repo and place it in your /usr/local/lib
-
-Then Just Run make
+Just Run make to test the lexer
