@@ -1,0 +1,2 @@
+bigint bg23 = 4500000e23;
+bigint bg43. = 145e-2;
