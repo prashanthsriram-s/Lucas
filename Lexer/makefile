@@ -3,7 +3,6 @@ antlrlib := /usr/local/lib/antlr-4.11.1-complete.jar
 TEST_DIR := testcases
 antlr4 := java -Xmx500M -cp "/usr/local/lib/antlr-4.11.1-complete.jar:$$CLASSPATH" org.antlr.v4.Tool
 grun := java -Xmx500M -cp "/usr/local/lib/antlr-4.11.1-complete.jar:$$CLASSPATH" org.antlr.v4.gui.TestRig
-# testfiles := $(TEST_DIR)/test1.txt $(TEST_DIR)/test2.txt $(TEST_DIR)/test3.txt $(TEST_DIR)/test4.txt 
 test: compile
 	echo "------------------"
 	echo "First Test Case"
