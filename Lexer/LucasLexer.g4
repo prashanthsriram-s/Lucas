@@ -26,11 +26,19 @@ If : 'if';
 Return : 'return';
 Switch : 'switch';
 Void : 'void';
-While : 'while';
+While: 'while';
 
+//trig expression, this will be used in the grammar later to define the expression whose <TE> must
+// be taken.
+TE: 'sin' | 'cos' | 'tan' | 'asin' | 'acos' | 'atan';
+
+//logarithmic expression, similar applications to TE (trig expression) above.
+LE: 'log' | 'ln';
 
 //fragments so that defining things like identifier naming conventions becomes a lot cleaner
 //and human readable
+
+
 fragment Digit
     : [0-9]
     ;
@@ -154,23 +162,6 @@ PlusEqual : '+=';
 MinusEqual : '-=';
 MultEqual : '*=';
 
-
-//trig expression, this will be used in the grammar later to define the expression whose
-//<TE> must be taken. 
-TE 
-    : 'sin'
-    | 'cos'
-    | 'tan'
-    | 'asin' 
-    | 'acos' 
-    | 'atan'
-    ;
-
-//logarithmic expression, similar applications to TE (trig expression) above.
-LE 
-    : 'log'
-    | 'ln'
-    ;
 
 
 
