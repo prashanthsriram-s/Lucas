@@ -78,7 +78,7 @@ unaryExpression
     ;
 
 unaryOperator
-    :   '&' | '*' | '+' | '-' | '~' | '!'
+    :  '*' | '+' | '-' | '~' | '!'
     ;
 
 castExpression
@@ -107,17 +107,6 @@ equalityExpression
     :   relationalExpression (('=='| '!=') relationalExpression)*
     ;
 
-andExpression
-    :   equalityExpression ( '&' equalityExpression)*
-    ;
-
-exclusiveOrExpression
-    :   andExpression ('^' andExpression)*
-    ;
-
-inclusiveOrExpression
-    :   exclusiveOrExpression ('|' exclusiveOrExpression)*
-    ;
 
 logicalAndExpression
     :   inclusiveOrExpression ('&&' inclusiveOrExpression)*
@@ -127,10 +116,6 @@ logicalOrExpression
     :   logicalAndExpression ( '||' logicalAndExpression)*
     ;
 
-conditionalExpression
-    :   logicalOrExpression ('?' expression ':' conditionalExpression)?
-    ;
-
 assignmentExpression
     :   conditionalExpression
     |   unaryExpression assignmentOperator assignmentExpression
@@ -138,7 +123,7 @@ assignmentExpression
     ;
 
 assignmentOperator
-    :   '=' | '*=' | '/=' | '%=' | '+=' | '-=' | '<<=' | '>>=' | '&=' | '^=' | '|='
+    :   '=' | '*=' | '/=' | '%=' | '+=' | '-='
     ;
 
 expression
@@ -163,8 +148,7 @@ declarationSpecifiers2
     ;
 
 declarationSpecifier
-    :   storageClassSpecifier
-    |   typeSpecifier
+    :   typeSpecifier
     |   typeQualifier
     |   functionSpecifier
     |   alignmentSpecifier
@@ -176,15 +160,6 @@ initDeclaratorList
 
 initDeclarator
     :   declarator ('=' initializer)?
-    ;
-
-storageClassSpecifier
-    :   'typedef'
-    |   'extern'
-    |   'static'
-    |   '_Thread_local'
-    |   'auto'
-    |   'register'
     ;
 
 typeSpecifier
