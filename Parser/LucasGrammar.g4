@@ -183,7 +183,7 @@ typeQualifier
     ;
 
 declarator
-    :   pointer? directDeclarator gccDeclaratorExtension*
+    :   pointer? directDeclarator //gccDeclaratorExtension*
     ;
 
 directDeclarator
@@ -210,23 +210,23 @@ vcSpecificModifer
     ;
 
 
-gccDeclaratorExtension
-    :   '__asm' '(' StringLiteral+ ')'
-    |   gccAttributeSpecifier
-    ;
+// gccDeclaratorExtension
+//     :   '__asm' '(' StringLiteral+ ')'
+//     |   gccAttributeSpecifier
+//     ;
 
-gccAttributeSpecifier
-    :   '__attribute__' '(' '(' gccAttributeList ')' ')'
-    ;
+// gccAttributeSpecifier
+//     :   '__attribute__' '(' '(' gccAttributeList ')' ')'
+//     ;
 
-gccAttributeList
-    :   gccAttribute? (',' gccAttribute?)*
-    ;
+// gccAttributeList
+//     :   gccAttribute? (',' gccAttribute?)*
+//     ;
 
-gccAttribute
-    :   ~(',' | '(' | ')') // relaxed def for "identifier or reserved word"
-        ('(' argumentExpressionList? ')')?
-    ;
+// gccAttribute
+//     :   ~(',' | '(' | ')') // relaxed def for "identifier or reserved word"
+//         ('(' argumentExpressionList? ')')?
+//     ;
 
 nestedParenthesesBlock
     :   (   ~('(' | ')')
@@ -265,21 +265,21 @@ typeName
 
 abstractDeclarator
     :   pointer
-    |   pointer? directAbstractDeclarator gccDeclaratorExtension*
+    |   pointer? directAbstractDeclarator //gccDeclaratorExtension*
     ;
 
 directAbstractDeclarator
-    :   '(' abstractDeclarator ')' gccDeclaratorExtension*
+    :   '(' abstractDeclarator ')' //gccDeclaratorExtension*
     |   '[' typeQualifierList? assignmentExpression? ']'
     |   '[' 'static' typeQualifierList? assignmentExpression ']'
     |   '[' typeQualifierList 'static' assignmentExpression ']'
     |   '[' '*' ']'
-    |   '(' parameterTypeList? ')' gccDeclaratorExtension*
+    |   '(' parameterTypeList? ')' //gccDeclaratorExtension*
     |   directAbstractDeclarator '[' typeQualifierList? assignmentExpression? ']'
     |   directAbstractDeclarator '[' 'static' typeQualifierList? assignmentExpression ']'
     |   directAbstractDeclarator '[' typeQualifierList 'static' assignmentExpression ']'
     |   directAbstractDeclarator '[' '*' ']'
-    |   directAbstractDeclarator '(' parameterTypeList? ')' gccDeclaratorExtension*
+    |   directAbstractDeclarator '(' parameterTypeList? ')' //gccDeclaratorExtension*
     ;
 
 typedefName
@@ -313,23 +313,17 @@ staticAssertDeclaration
     ;
 
 statement
-    :   labeledStatement
-    |   compoundStatement
+    :   compoundStatement
     |   expressionStatement
     |   selectionStatement
     |   iterationStatement
     |   jumpStatement
-    |   ('__asm' | '__asm__') ('volatile' | '__volatile__') '(' (logicalOrExpression (',' logicalOrExpression)*)? (':' (logicalOrExpression (',' logicalOrExpression)*)?)* ')' ';'
+    //|   ('__asm' | '__asm__') ('volatile' | '__volatile__') '(' (logicalOrExpression (',' logicalOrExpression)*)? (':' (logicalOrExpression (',' logicalOrExpression)*)?)* ')' ';'
     ;
 
-labeledStatement
-    :   Identifier ':' statement
-    |   'case' constantExpression ':' statement
-    |   'default' ':' statement
-    ;
 
 compoundStatement
-    :   '{' blockItemList? '}'
+    :   blockItemList? 
     ;
 
 blockItemList
@@ -346,13 +340,12 @@ expressionStatement
     ;
 
 selectionStatement
-    :   'if' '(' expression ')' statement ('else' statement)?
-    |   'switch' '(' expression ')' statement
+    :   Begin If ('['Identifier']')? '(' expression ')' statement End If (Identifier)? (Begin Else If ('['Identifier']')? statement End Else If (Identifier)?)* (Begin Else statement End Else)?
     ;
 
 iterationStatement
-    :   While '(' expression ')' statement
-    |   For '(' forCondition ')' statement
+    :   Begin While ('['Identifier']')? '(' expression ')' statement End While (Identifier)?
+    |   Begin For ('['Identifier']')? '(' forCondition ')' statement End For (Identifier)?
     ;
 
 //    |   'for' '(' expression? ';' expression?  ';' forUpdate? ')' statement
@@ -372,8 +365,8 @@ forExpression
 
 jumpStatement
     :   (
-    |   ('continue'| 'break') Identifier?
-    |   'return' expression?
+    |   (Continue| Break) Identifier?
+    |   Return expression?
     )
     ';'
     ;
