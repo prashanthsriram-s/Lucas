@@ -120,8 +120,6 @@ declarationSpecifiers2
 declarationSpecifier
     :   typeSpecifier
     |   typeQualifier
-    |   functionSpecifier
-    |   alignmentSpecifier
     ;
 
 initDeclaratorList
@@ -135,25 +133,17 @@ initDeclarator
 typeSpecifier
     :   ('void'
     |   'char'
-    |   'short'
+    |   'charseq'
     |   'int'
+    |   'bigint' 
     |   'long'
     |   'float'
     |   'double'
-    |   'signed'
-    |   'unsigned'
-    |   '_Bool'
-    |   '_Complex'
-    |   '__m128'
-    |   '__m128d'
-    |   '__m128i')
-    |   '__extension__' '(' ('__m128' | '__m128d' | '__m128i') ')'
-    |   atomicTypeSpecifier
-    |   structOrUnionSpecifier
-    |   enumSpecifier
+    |   'boolean')
+    |   structOrUnionSpecifier   MAKE CLASSESSSSSSSSSSs
     |   typedefName
-    |   '__typeof__' '(' constantExpression ')' // GCC extension
     ;
+
 
 structOrUnionSpecifier
     :   structOrUnion Identifier? '{' structDeclarationList '}'
@@ -188,45 +178,8 @@ structDeclarator
     |   declarator? ':' constantExpression
     ;
 
-enumSpecifier
-    :   'enum' Identifier? '{' enumeratorList ','? '}'
-    |   'enum' Identifier
-    ;
-
-enumeratorList
-    :   enumerator (',' enumerator)*
-    ;
-
-enumerator
-    :   enumerationConstant ('=' constantExpression)?
-    ;
-
-enumerationConstant
-    :   Identifier
-    ;
-
-atomicTypeSpecifier
-    :   '_Atomic' '(' typeName ')'
-    ;
-
 typeQualifier
     :   'const'
-    |   'restrict'
-    |   'volatile'
-    |   '_Atomic'
-    ;
-
-functionSpecifier
-    :   ('inline'
-    |   '_Noreturn'
-    |   '__inline__' // GCC extension
-    |   '__stdcall')
-    |   gccAttributeSpecifier
-    |   '__declspec' '(' Identifier ')'
-    ;
-
-alignmentSpecifier
-    :   '_Alignas' '(' (typeName | constantExpression) ')'
     ;
 
 declarator
@@ -418,10 +371,9 @@ forExpression
     ;
 
 jumpStatement
-    :   ('goto' Identifier
-    |   ('continue'| 'break')
+    :   (
+    |   ('continue'| 'break') Identifier?
     |   'return' expression?
-    |   'goto' unaryExpression // GCC extension
     )
     ';'
     ;
@@ -436,12 +388,17 @@ translationUnit
 
 externalDeclaration
     :   functionDefinition
+    |   functionDeclaration
     |   declaration
     |   ';' // stray ;
     ;
 
+functionDeclaration
+    : Decl Function Identifier '('parameterTypeList')' (Arrow '('parameterList')')?
+    ;
+
 functionDefinition
-    :   declarationSpecifiers? declarator declarationList? compoundStatement
+    : Begin Function Identifier '('parameterTypeList')' (Arrow '('parameterList')')? compoundStatement End Function Identifier?//declarationSpecifiers? declarator declarationList?Function Identifier '('parameterTypeList')' (Arrow '('parameterList')')?
     ;
 
 declarationList
