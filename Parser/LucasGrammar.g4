@@ -3,7 +3,7 @@ grammar LucasGrammar;
 
 primaryExpression
     :   Identifier
-    |   Constant
+    |   Literal
     |   StringLiteral+
     |   '(' expression ')'
     |   genericSelection
@@ -57,7 +57,7 @@ unaryOperator
 castExpression
     :   '__extension__'? '(' typeName ')' castExpression
     |   unaryExpression
-    |   DigitSequence // for
+    |   Digit+ // for
     ;
 
 multiplicativeExpression
@@ -79,7 +79,7 @@ equalityExpression
 
 
 logicalAndExpression
-    :   inclusiveOrExpression ('&&' inclusiveOrExpression)*
+    :   equalityExpression ('&&' equalityExpression)*
     ;
 
 logicalOrExpression
@@ -87,9 +87,9 @@ logicalOrExpression
     ;
 
 assignmentExpression
-    :   conditionalExpression
+    :   logicalOrExpression
     |   unaryExpression assignmentOperator assignmentExpression
-    |   DigitSequence // for
+    |   Digit+ // for
     ;
 
 assignmentOperator
@@ -101,7 +101,7 @@ expression
     ;
 
 constantExpression
-    :   conditionalExpression
+    :   logicalOrExpression
     ;
 
 declaration
@@ -242,7 +242,7 @@ directDeclarator
     |   directDeclarator '[' typeQualifierList? '*' ']'
     |   directDeclarator '(' parameterTypeList ')'
     |   directDeclarator '(' identifierList? ')'
-    |   Identifier ':' DigitSequence  // bit field
+    |   Identifier ':' Digit+  // bit field
     |   vcSpecificModifer Identifier // Visual C Extension
     |   '(' vcSpecificModifer declarator ')' // Visual C Extension
     ;
@@ -399,7 +399,6 @@ selectionStatement
 
 iterationStatement
     :   While '(' expression ')' statement
-    |   Do statement While '(' expression ')' ';'
     |   For '(' forCondition ')' statement
     ;
 
