@@ -7,7 +7,7 @@ primaryExpression
     |   StringLiteral+
     |   '(' expression ')'
     |   genericSelection
-    |   '__extension__'? '(' compoundStatement ')' // Blocks (GCC extension)
+	//| '__extension__'? '(' (statement | declaration)* ')' // Blocks (GCC extension)
     |   '__builtin_va_arg' '(' unaryExpression ',' typeName ')'
     |   '__builtin_offsetof' '(' typeName ',' unaryExpression ')'
     ;
@@ -313,8 +313,7 @@ staticAssertDeclaration
     ;
 
 statement
-    :   compoundStatement
-    |   expressionStatement
+    :   expressionStatement
     |   selectionStatement
     |   iterationStatement
     |   jumpStatement
@@ -322,30 +321,18 @@ statement
     ;
 
 
-compoundStatement
-    :   blockItemList? 
-    ;
-
-blockItemList
-    :   blockItem+
-    ;
-
-blockItem
-    :   statement
-    |   declaration
-    ;
 
 expressionStatement
     :   expression? ';'
     ;
 
 selectionStatement
-    :   Begin If ('['Identifier']')? '(' expression ')' statement End If (Identifier)? (Begin Else If ('['Identifier']')? statement End Else If (Identifier)?)* (Begin Else statement End Else)?
+    :   Begin If ('['Identifier']')? '(' expression ')' (statement|declaration)* End If (Identifier)? (Begin Else If ('['Identifier']')? (statement|declaration)* End Else If (Identifier)?)* (Begin Else (statement|declaration)* End Else)?
     ;
 
 iterationStatement
-    :   Begin While ('['Identifier']')? '(' expression ')' statement End While (Identifier)?
-    |   Begin For ('['Identifier']')? '(' forCondition ')' statement End For (Identifier)?
+    :   Begin While ('['Identifier']')? '(' expression ')' (statement|declaration)* End While (Identifier)?
+    |   Begin For ('['Identifier']')? '(' forCondition ')' (statement|declaration)* End For (Identifier)?
     ;
 
 //    |   'for' '(' expression? ';' expression?  ';' forUpdate? ')' statement
@@ -391,7 +378,7 @@ functionDeclaration
     ;
 
 functionDefinition
-    : Begin Function Identifier '('parameterTypeList')' (Arrow '('parameterList')')? compoundStatement End Function Identifier?//declarationSpecifiers? declarator declarationList?Function Identifier '('parameterTypeList')' (Arrow '('parameterList')')?
+    : Begin Function Identifier '('parameterTypeList')' (Arrow '('parameterList')')? (statement|declaration)* End Function Identifier?//declarationSpecifiers? declarator declarationList?Function Identifier '('parameterTypeList')' (Arrow '('parameterList')')?
     ;
 
 declarationList
