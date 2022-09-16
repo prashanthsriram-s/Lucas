@@ -89,7 +89,25 @@ logicalOrExpression
 assignmentExpression
     :   logicalOrExpression
     |   unaryExpression assignmentOperator assignmentExpression
-    |   Digit+ // for
+	| Digit+ // for
+	| mathexpr 
+    ;
+
+mathexpr:
+	'(' mathexpr ')'
+	| TE '(' mathexpr ')'
+	| LE '(' mathexpr ')'
+	| '-'? ('e' | 'E') '-'? mathexpr
+	| mathexpr '+' mathexpr
+	| mathexpr '-' mathexpr
+	| '-'? Literal '*' mathexpr
+	| mathexpr 'ceildiv' Literal
+	| mathexpr 'floordiv' Literal
+	| mathexpr 'mod' Literal
+	| '-' mathexpr
+	| Identifier
+	| '-'? Literal
+	//| L
     ;
 
 assignmentOperator

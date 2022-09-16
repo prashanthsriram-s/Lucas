@@ -1,4 +1,4 @@
-decl function Haha(int y, bigint z) -> (float x);
-begin function hello()
-    int x = 3I;
+begin function hello(int x) -> (int)
+    int x = sin(2*x) + cos(log(3*y))*7;
+    return 23;
 end function
