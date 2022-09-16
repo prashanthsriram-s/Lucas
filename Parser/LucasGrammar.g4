@@ -141,7 +141,6 @@ typeSpecifier
     |   'float'
     |   'double'
     |   'boolean')
-    //|   structOrUnionSpecifier   //MAKE CLASSESSSSSSSSSSs
     |   classSpecifier 
     |   Identifier
     ;
@@ -169,15 +168,11 @@ accessSpecifier
     | Private
     ;
 
-
 memberDeclaration
     : functionDeclaration
     | functionDefinition
     | declaration  //check this once to see if anything else is to be added
     ;
-
-
-
 
 // structOrUnionSpecifier
 //     :   structOrUnion Identifier? '{' structDeclarationList '}'
