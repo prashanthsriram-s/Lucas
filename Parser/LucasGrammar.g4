@@ -6,22 +6,7 @@ primaryExpression
     |   Literal
     |   StringLiteral+
     |   '(' expression ')'
-    |   genericSelection
 	//| '__extension__'? '(' (statement | declaration)* ')' // Blocks (GCC extension)
-    |   '__builtin_va_arg' '(' unaryExpression ',' typeName ')'
-    |   '__builtin_offsetof' '(' typeName ',' unaryExpression ')'
-    ;
-
-genericSelection
-    :   '_Generic' '(' assignmentExpression ',' genericAssocList ')'
-    ;
-
-genericAssocList
-    :   genericAssociation (',' genericAssociation)*
-    ;
-
-genericAssociation
-    :   (typeName | 'default') ':' assignmentExpression
     ;
 
 postfixExpression
@@ -45,7 +30,7 @@ unaryExpression
     ('++' |  '--' |  'sizeof')*
     (postfixExpression
     |   unaryOperator castExpression
-    |   ('sizeof' | '_Alignof') '(' typeName ')'
+    |   'sizeof' '(' typeName ')'
     |   '&&' Identifier // GCC extension address of label
     )
     ;
@@ -124,7 +109,6 @@ constantExpression
 
 declaration
     :   declarationSpecifiers initDeclaratorList? ';'
-    |   staticAssertDeclaration
     ;
 
 declarationSpecifiers
@@ -159,8 +143,21 @@ typeSpecifier
     |   'double'
     |   'boolean')
     |   structOrUnionSpecifier   //MAKE CLASSESSSSSSSSSSs
-    |   typedefName
+    |   classSpecifier 
+    |   Identifier
     ;
+
+classSpecifier
+    : Begin Class Identifier (memberDeclaration | Colon)+ //ADD ACCESS SPECIFIER HERE ACCORDING TO THE C++ GRAMMAR
+    ;
+
+memberDeclaration
+    : functionDeclaration
+    | functionDefinition
+    | declaration  //check this once to see if anything else is to be added
+    ;
+
+
 
 
 structOrUnionSpecifier
@@ -180,7 +177,6 @@ structDeclarationList
 structDeclaration // The first two rules have priority order and cannot be simplified to one expression.
     :   specifierQualifierList structDeclaratorList ';'
     |   specifierQualifierList ';'
-    |   staticAssertDeclaration
     ;
 
 specifierQualifierList
@@ -300,10 +296,6 @@ directAbstractDeclarator
     |   directAbstractDeclarator '(' parameterTypeList? ')' //gccDeclaratorExtension*
     ;
 
-typedefName
-    :   Identifier
-    ;
-
 initializer
     :   assignmentExpression
     |   '{' initializerList ','? '}'
@@ -324,10 +316,6 @@ designatorList
 designator
     :   '[' constantExpression ']'
     |   '.' Identifier
-    ;
-
-staticAssertDeclaration
-    :   '_Static_assert' '(' constantExpression ',' StringLiteral+ ')' ';'
     ;
 
 statement
@@ -558,6 +546,7 @@ Increment: '++';
 Decrement: '--';
 RightShift: '>>';
 LeftShift: '<<';
+Colon: ':';
 
 //assignment operators, which include compound assignment here 
 Assign : '=';

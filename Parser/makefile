@@ -14,3 +14,4 @@ clean:
 	rm *.java
 	rm *.interp
 	rm *.class
+	rm .antlr/*
