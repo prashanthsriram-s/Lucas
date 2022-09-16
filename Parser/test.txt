@@ -1,11 +1,6 @@
-begin class Class1
-private:
-    int x;
-public:
-    begin function setX(int y) -> ()
-        x = y;
-    end function
-    begin function getX() -> (int)
-        return x;
-    end function
-end class Class1;
+begin function main() -> (int)
+	expr f;
+	// f.var = 'x';
+	f = x*8 + log(x^2)*cos(x^3);
+	return 0;
+end function;
