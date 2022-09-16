@@ -6,7 +6,7 @@ begin class cls
      begin function get_diff_and_prod()->(int, int)
        return (num2-num1, num1*num2);
      end function get_diff_and_prod
-end class cls
+end class cls;
 begin function main()->(int)
   bigint var1= 23I;
   charseq strng="Lucas Parser";
