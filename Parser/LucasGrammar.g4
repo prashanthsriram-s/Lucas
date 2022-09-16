@@ -6,7 +6,6 @@ primaryExpression
     |   Literal
     |   StringLiteral+
     |   '(' expression ')'
-	//| '__extension__'? '(' (statement | declaration)* ')' // Blocks (GCC extension)
     ;
 
 postfixExpression
@@ -143,7 +142,6 @@ typeSpecifier
     |   'double'
     |   'boolean')
     |    Expr
-    //|   structOrUnionSpecifier   //MAKE CLASSESSSSSSSSSSs
     |   classSpecifier 
     |   Identifier
     ;
@@ -171,29 +169,12 @@ accessSpecifier
     | Private
     ;
 
-
 memberDeclaration
     : functionDeclaration
     | functionDefinition
     | declaration  //check this once to see if anything else is to be added
     ;
 
-
-
-
-// structOrUnionSpecifier
-//     :   structOrUnion Identifier? '{' structDeclarationList '}'
-//     |   structOrUnion Identifier
-//     ;
-
-// structOrUnion
-//     :   'struct'
-//     |   'union'
-//     ;
-
-// structDeclarationList
-//     :   structDeclaration+
-//     ;
 
 structDeclaration // The first two rules have priority order and cannot be simplified to one expression.
     :   specifierQualifierList structDeclaratorList ';'
@@ -225,44 +206,13 @@ directDeclarator
     :   Identifier
     |   '(' declarator ')'
     |   directDeclarator '[' typeQualifierList? assignmentExpression? ']'
-    //|   directDeclarator '[' 'static' typeQualifierList? assignmentExpression ']'
-    //|   directDeclarator '[' typeQualifierList 'static' assignmentExpression ']'
     |   directDeclarator '[' typeQualifierList? '*' ']'
     |   directDeclarator '(' parameterTypeList ')'
     |   directDeclarator '(' identifierList? ')'
     |   Identifier ':' Digit+  // bit field
-    //|   vcSpecificModifer Identifier // Visual C Extension
-    //|   '(' vcSpecificModifer declarator ')' // Visual C Extension
     ;
 
-/* 
-vcSpecificModifer
-    :   ('__cdecl' 
-    |   '__clrcall' 
-    |   '__stdcall' 
-    |   '__fastcall' 
-    |   '__thiscall' 
-    |   '__vectorcall') 
-    ;
-*/
 
-// gccDeclaratorExtension
-//     :   '__asm' '(' StringLiteral+ ')'
-//     |   gccAttributeSpecifier
-//     ;
-
-// gccAttributeSpecifier
-//     :   '__attribute__' '(' '(' gccAttributeList ')' ')'
-//     ;
-
-// gccAttributeList
-//     :   gccAttribute? (',' gccAttribute?)*
-//     ;
-
-// gccAttribute
-//     :   ~(',' | '(' | ')') // relaxed def for "identifier or reserved word"
-//         ('(' argumentExpressionList? ')')?
-//     ;
 
 nestedParenthesesBlock
     :   (   ~('(' | ')')
@@ -307,13 +257,9 @@ abstractDeclarator
 directAbstractDeclarator
     :   '(' abstractDeclarator ')' //gccDeclaratorExtension*
     |   '[' typeQualifierList? assignmentExpression? ']'
-    //|   '[' 'static' typeQualifierList? assignmentExpression ']'
-    //|   '[' typeQualifierList 'static' assignmentExpression ']'
     |   '[' '*' ']'
     |   '(' parameterTypeList? ')' //gccDeclaratorExtension*
     |   directAbstractDeclarator '[' typeQualifierList? assignmentExpression? ']'
-    //|   directAbstractDeclarator '[' 'static' typeQualifierList? assignmentExpression ']'
-    //|   directAbstractDeclarator '[' typeQualifierList 'static' assignmentExpression ']'
     |   directAbstractDeclarator '[' '*' ']'
     |   directAbstractDeclarator '(' parameterTypeList? ')' //gccDeclaratorExtension*
     ;
@@ -345,7 +291,6 @@ statement
     |   selectionStatement
     |   iterationStatement
     |   jumpStatement
-    //|   ('__asm' | '__asm__') ('volatile' | '__volatile__') '(' (logicalOrExpression (',' logicalOrExpression)*)? (':' (logicalOrExpression (',' logicalOrExpression)*)?)* ')' ';'
     ;
 
 
