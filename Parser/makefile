@@ -15,6 +15,8 @@ test4: compile
 	$(grun) LucasGrammar compilationUnit $(TEST_DIR)/Test_case4_parser.txt -gui
 test5: compile
 	$(grun) LucasGrammar compilationUnit $(TEST_DIR)/Test_case5_parser.txt -gui
+test6: compile
+	$(grun) LucasGrammar compilationUnit $(TEST_DIR)/Test_case6_parser.txt -gui
 test: compile
 	$(grun) LucasGrammar compilationUnit test.txt -gui
 compile:
