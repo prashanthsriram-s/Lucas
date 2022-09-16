@@ -83,7 +83,7 @@ mathexpr:
 	| TE '(' mathexpr ')'
 	| LE '(' mathexpr ')'
     | mathexpr '^' mathexpr
-	| '-'? ('e' | 'E') '-'? mathexpr
+	//| '-'? ('e' | 'E') '-'? mathexpr
 	| mathexpr '+' mathexpr
 	| mathexpr '-' mathexpr
 	| mathexpr '*' mathexpr
