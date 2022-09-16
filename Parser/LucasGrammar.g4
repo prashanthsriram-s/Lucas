@@ -143,7 +143,8 @@ typeSpecifier
     |   'boolean')
     |    Expr
     |   classSpecifier 
-    |   Identifier
+	| Vector LessThan typeSpecifier GreaterThan
+    | Identifier 
     ;
 
 classSpecifier
