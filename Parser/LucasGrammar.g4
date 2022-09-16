@@ -6,7 +6,6 @@ primaryExpression
     |   Literal
     |   StringLiteral+
     |   '(' expression ')'
-	//| '__extension__'? '(' (statement | declaration)* ')' // Blocks (GCC extension)
     ;
 
 postfixExpression
