@@ -545,6 +545,8 @@ RightShiftEqual : '>>=';
 PlusEqual : '+=';
 MinusEqual : '-=';
 MultEqual : '*=';
+DivEqual : '/=';
+ModEqual : '%=';
 
 
 
