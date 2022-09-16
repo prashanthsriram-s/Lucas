@@ -2,7 +2,7 @@ begin class Class1
 private:
     int x;
 public:
-    begin function setX(int y)
+    begin function setX(int y) -> ()
         x = y;
     end function
     begin function getX() -> (int)
