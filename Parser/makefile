@@ -17,6 +17,16 @@ test5: compile
 	$(grun) LucasGrammar compilationUnit $(TEST_DIR)/Test_case5_parser.txt -gui
 test6: compile
 	$(grun) LucasGrammar compilationUnit $(TEST_DIR)/Test_case6_parser.txt -gui
+test7: compile
+	$(grun) LucasGrammar compilationUnit $(TEST_DIR)/Test_case7_parser.txt -gui
+wtest1: compile
+	$(grun) LucasGrammar compilationUnit $(TEST_DIR)/Wrong_test_case1_parser.txt -gui
+wtest2: compile
+	$(grun) LucasGrammar compilationUnit $(TEST_DIR)/Wrong_test_case2_parser.txt -gui
+wtest4: compile
+	$(grun) LucasGrammar compilationUnit $(TEST_DIR)/Wrong_test_case4_parser.txt -gui
+wtest7: compile
+	$(grun) LucasGrammar compilationUnit $(TEST_DIR)/Wrong_test_case7_parser.txt -gui
 test: compile
 	$(grun) LucasGrammar compilationUnit test.txt -gui
 compile:

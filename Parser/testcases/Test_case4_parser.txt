@@ -1,11 +1,9 @@
 //Testing related to vector
 begin function main()->(int)
-  vector<char> vec1(10, 'a');
-  vector<int> vec2{1, 2, 3, 4};
+  vector<int> vec2 = {1, 2, 3, 4}; // One way to initialize vectors in Lucas.
   begin for(int i=5; i<11; i++)
     vec2.push_back(i);
   end for
-  vec1.pop_back();
   print("Size of vec2="+vec2.size());
   return 0;
 end function main

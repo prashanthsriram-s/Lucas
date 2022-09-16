@@ -1,6 +1,6 @@
 grammar LucasGrammar;
 
-
+// Expressions
 primaryExpression
     :   Identifier
     |   Literal
@@ -106,6 +106,7 @@ constantExpression
     :   logicalOrExpression
     ;
 
+// Handling Declarations of variables and classes
 declaration
     :   declarationSpecifiers initDeclaratorList? ';'
     ;
@@ -131,6 +132,7 @@ initDeclarator
     :   declarator ('=' initializer)?
     ;
 
+//Types of variables allowed in lucas
 typeSpecifier
     :   ('void'
     |   'char'
@@ -147,6 +149,7 @@ typeSpecifier
     |   Identifier 
     ;
 
+// Classes: 
 classSpecifier
     : classDeclaration
     | classDefinition
