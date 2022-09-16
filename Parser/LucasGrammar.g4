@@ -74,14 +74,15 @@ logicalOrExpression
 assignmentExpression
     :   logicalOrExpression
     |   unaryExpression assignmentOperator assignmentExpression
-	| Digit+ // for
-	| mathexpr 
+	|   Digit+ // for
+	|   mathexpr 
     ;
 
 mathexpr:
 	'(' mathexpr ')'
 	| TE '(' mathexpr ')'
 	| LE '(' mathexpr ')'
+    | mathexpr '^' mathexpr
 	| '-'? ('e' | 'E') '-'? mathexpr
 	| mathexpr '+' mathexpr
 	| mathexpr '-' mathexpr
@@ -141,6 +142,7 @@ typeSpecifier
     |   'float'
     |   'double'
     |   'boolean')
+    |    Expr
     //|   structOrUnionSpecifier   //MAKE CLASSESSSSSSSSSSs
     |   classSpecifier 
     |   Identifier
