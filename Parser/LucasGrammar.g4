@@ -140,7 +140,7 @@ typeSpecifier
     |   'float'
     |   'double'
     |   'boolean')
-    |   structOrUnionSpecifier   MAKE CLASSESSSSSSSSSSs
+    |   structOrUnionSpecifier   //MAKE CLASSESSSSSSSSSSs
     |   typedefName
     ;
 
@@ -374,7 +374,7 @@ externalDeclaration
     ;
 
 functionDeclaration
-    : Decl Function Identifier '('parameterTypeList')' (Arrow '('parameterList')')?
+    : Decl Function Identifier '('parameterTypeList')' (Arrow '('parameterList')')? ';'
     ;
 
 functionDefinition
