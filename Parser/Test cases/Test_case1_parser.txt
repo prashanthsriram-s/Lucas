@@ -6,7 +6,7 @@ begin function main()->(int)
     print("num is positive\n");
   end if Label
   begin while[Label1](1)
-    num>>=1;
+    num-=1;
     begin if[Label2](num<=0)
       break Label1;
     end if//Its optional to mention label here
