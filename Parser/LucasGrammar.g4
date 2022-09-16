@@ -157,7 +157,12 @@ classDeclaration
     ;
 
 classDefinition
-    : Begin Class Identifier? (memberDeclaration | accessSpecifier Colon)+ End Class Identifier? //ADD ACCESS SPECIFIER HERE ACCORDING TO THE C++ GRAMMAR
+    : Begin Class Identifier? (accessSpecificDeclarations)+  End Class Identifier? 
+    //| Begin Class Identifier? (memberDeclaration | accessSpecifier Colon)+ End Class Identifier? 
+    ;
+
+accessSpecificDeclarations
+    : (accessSpecifier Colon)? memberDeclaration+
     ;
 
 accessSpecifier

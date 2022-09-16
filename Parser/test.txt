@@ -1,16 +1,11 @@
 begin class Class1
-public:
+private:
     int x;
+public:
     begin function setX(int y)
         x = y;
     end function
     begin function getX() -> (int)
         return x;
     end function
-end class;
-
-begin function hello(int x) -> (int)
-    Class1 c1;
-    c1.setX(2);
-    print(c1.getX());
-end function
+end class Class1;
