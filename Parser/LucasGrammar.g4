@@ -6,22 +6,7 @@ primaryExpression
     |   Literal
     |   StringLiteral+
     |   '(' expression ')'
-    |   genericSelection
-    |   '__extension__'? '(' compoundStatement ')' // Blocks (GCC extension)
-    |   '__builtin_va_arg' '(' unaryExpression ',' typeName ')'
-    |   '__builtin_offsetof' '(' typeName ',' unaryExpression ')'
-    ;
-
-genericSelection
-    :   '_Generic' '(' assignmentExpression ',' genericAssocList ')'
-    ;
-
-genericAssocList
-    :   genericAssociation (',' genericAssociation)*
-    ;
-
-genericAssociation
-    :   (typeName | 'default') ':' assignmentExpression
+	//| '__extension__'? '(' (statement | declaration)* ')' // Blocks (GCC extension)
     ;
 
 postfixExpression
@@ -45,7 +30,7 @@ unaryExpression
     ('++' |  '--' |  'sizeof')*
     (postfixExpression
     |   unaryOperator castExpression
-    |   ('sizeof' | '_Alignof') '(' typeName ')'
+    |   'sizeof' '(' typeName ')'
     |   '&&' Identifier // GCC extension address of label
     )
     ;
@@ -89,7 +74,25 @@ logicalOrExpression
 assignmentExpression
     :   logicalOrExpression
     |   unaryExpression assignmentOperator assignmentExpression
-    |   Digit+ // for
+	| Digit+ // for
+	| mathexpr 
+    ;
+
+mathexpr:
+	'(' mathexpr ')'
+	| TE '(' mathexpr ')'
+	| LE '(' mathexpr ')'
+	| '-'? ('e' | 'E') '-'? mathexpr
+	| mathexpr '+' mathexpr
+	| mathexpr '-' mathexpr
+	| '-'? Literal '*' mathexpr
+	| mathexpr 'ceildiv' Literal
+	| mathexpr 'floordiv' Literal
+	| mathexpr 'mod' Literal
+	| '-' mathexpr
+	| Identifier
+	| '-'? Literal
+	//| L
     ;
 
 assignmentOperator
@@ -106,7 +109,6 @@ constantExpression
 
 declaration
     :   declarationSpecifiers initDeclaratorList? ';'
-    |   staticAssertDeclaration
     ;
 
 declarationSpecifiers
@@ -140,29 +142,61 @@ typeSpecifier
     |   'float'
     |   'double'
     |   'boolean')
-    |   structOrUnionSpecifier   MAKE CLASSESSSSSSSSSSs
-    |   typedefName
+    //|   structOrUnionSpecifier   //MAKE CLASSESSSSSSSSSSs
+    |   classSpecifier 
+    |   Identifier
+    ;
+
+classSpecifier
+    : classDeclaration
+    | classDefinition
+    ;
+
+classDeclaration
+    : Decl Class Identifier
+    ;
+
+classDefinition
+    : Begin Class Identifier? (accessSpecificDeclarations)+  End Class Identifier? 
+    //| Begin Class Identifier? (memberDeclaration | accessSpecifier Colon)+ End Class Identifier? 
+    ;
+
+accessSpecificDeclarations
+    : (accessSpecifier Colon)? memberDeclaration+
+    ;
+
+accessSpecifier
+    : Public
+    | Private
     ;
 
 
-structOrUnionSpecifier
-    :   structOrUnion Identifier? '{' structDeclarationList '}'
-    |   structOrUnion Identifier
+memberDeclaration
+    : functionDeclaration
+    | functionDefinition
+    | declaration  //check this once to see if anything else is to be added
     ;
 
-structOrUnion
-    :   'struct'
-    |   'union'
-    ;
 
-structDeclarationList
-    :   structDeclaration+
-    ;
+
+
+// structOrUnionSpecifier
+//     :   structOrUnion Identifier? '{' structDeclarationList '}'
+//     |   structOrUnion Identifier
+//     ;
+
+// structOrUnion
+//     :   'struct'
+//     |   'union'
+//     ;
+
+// structDeclarationList
+//     :   structDeclaration+
+//     ;
 
 structDeclaration // The first two rules have priority order and cannot be simplified to one expression.
     :   specifierQualifierList structDeclaratorList ';'
     |   specifierQualifierList ';'
-    |   staticAssertDeclaration
     ;
 
 specifierQualifierList
@@ -282,10 +316,6 @@ directAbstractDeclarator
     |   directAbstractDeclarator '(' parameterTypeList? ')' //gccDeclaratorExtension*
     ;
 
-typedefName
-    :   Identifier
-    ;
-
 initializer
     :   assignmentExpression
     |   '{' initializerList ','? '}'
@@ -308,13 +338,8 @@ designator
     |   '.' Identifier
     ;
 
-staticAssertDeclaration
-    :   '_Static_assert' '(' constantExpression ',' StringLiteral+ ')' ';'
-    ;
-
 statement
-    :   compoundStatement
-    |   expressionStatement
+    :   expressionStatement
     |   selectionStatement
     |   iterationStatement
     |   jumpStatement
@@ -322,30 +347,18 @@ statement
     ;
 
 
-compoundStatement
-    :   blockItemList? 
-    ;
-
-blockItemList
-    :   blockItem+
-    ;
-
-blockItem
-    :   statement
-    |   declaration
-    ;
 
 expressionStatement
     :   expression? ';'
     ;
 
 selectionStatement
-    :   Begin If ('['Identifier']')? '(' expression ')' statement End If (Identifier)? (Begin Else If ('['Identifier']')? statement End Else If (Identifier)?)* (Begin Else statement End Else)?
+    :   Begin If ('['Identifier']')? '(' expression ')' (statement|declaration)* End If (Identifier)? (Begin Else If ('['Identifier']')? (statement|declaration)* End Else If (Identifier)?)* (Begin Else (statement|declaration)* End Else)?
     ;
 
 iterationStatement
-    :   Begin While ('['Identifier']')? '(' expression ')' statement End While (Identifier)?
-    |   Begin For ('['Identifier']')? '(' forCondition ')' statement End For (Identifier)?
+    :   Begin While ('['Identifier']')? '(' expression ')' (statement|declaration)* End While (Identifier)?
+    |   Begin For ('['Identifier']')? '(' forCondition ')' (statement|declaration)* End For (Identifier)?
     ;
 
 //    |   'for' '(' expression? ';' expression?  ';' forUpdate? ')' statement
@@ -387,11 +400,11 @@ externalDeclaration
     ;
 
 functionDeclaration
-    : Decl Function Identifier '('parameterTypeList')' (Arrow '('parameterList')')?
+    : Decl Function Identifier '('parameterTypeList?')' (Arrow '('parameterList?')')? ';'
     ;
 
 functionDefinition
-    : Begin Function Identifier '('parameterTypeList')' (Arrow '('parameterList')')? compoundStatement End Function Identifier?//declarationSpecifiers? declarator declarationList?Function Identifier '('parameterTypeList')' (Arrow '('parameterList')')?
+    : Begin Function Identifier '('parameterTypeList?')' (Arrow '('parameterList?')')? (statement|declaration)* End Function Identifier?//declarationSpecifiers? declarator declarationList?Function Identifier '('parameterTypeList')' (Arrow '('parameterList')')?
     ;
 
 declarationList
@@ -436,9 +449,6 @@ LE: 'log' | 'ln';
 //and human readable
 
 
-fragment Digit
-    : [0-9]
-    ;
 
 fragment IDNonDigit
     : [a-zA-Z_]
@@ -508,9 +518,7 @@ fragment SimpleEscapeSequence
     :   '\\' ['"?nrtv\\]
     ;
 
-fragment StringLiteral
-    : '"' StringLiteralBody '"'
-    ;
+
 
 fragment StringLiteralBody
     : CharacterLiteralBody*
@@ -518,6 +526,14 @@ fragment StringLiteralBody
 
 fragment BooleanLiteral
     : 'true' | 'false'
+    ;
+
+Digit
+    : [0-9]
+    ;
+
+StringLiteral
+    : '"' StringLiteralBody '"'
     ;
 
 // 3. Operators
@@ -550,6 +566,7 @@ Increment: '++';
 Decrement: '--';
 RightShift: '>>';
 LeftShift: '<<';
+Colon: ':';
 
 //assignment operators, which include compound assignment here 
 Assign : '=';
@@ -558,6 +575,8 @@ RightShiftEqual : '>>=';
 PlusEqual : '+=';
 MinusEqual : '-=';
 MultEqual : '*=';
+DivEqual : '/=';
+ModEqual : '%=';
 
 
 
