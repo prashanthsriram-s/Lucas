@@ -141,8 +141,21 @@ typeSpecifier
     |   'double'
     |   'boolean')
     |   structOrUnionSpecifier   //MAKE CLASSESSSSSSSSSSs
+    |   classSpecifier 
     |   typedefName
     ;
+
+classSpecifier
+    : Begin Class Identifier (memberDeclaration | Colon)+ //ADD ACCESS SPECIFIER HERE ACCORDING TO THE C++ GRAMMAR
+    ;
+
+memberDeclaration
+    : functionDeclaration
+    | functionDefinition
+    | declaration  //check this once to see if anything else is to be added
+    ;
+
+
 
 
 structOrUnionSpecifier
@@ -540,6 +553,7 @@ Increment: '++';
 Decrement: '--';
 RightShift: '>>';
 LeftShift: '<<';
+Colon: ':';
 
 //assignment operators, which include compound assignment here 
 Assign : '=';
