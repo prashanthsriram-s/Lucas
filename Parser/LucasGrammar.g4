@@ -423,9 +423,6 @@ LE: 'log' | 'ln';
 //and human readable
 
 
-fragment Digit
-    : [0-9]
-    ;
 
 fragment IDNonDigit
     : [a-zA-Z_]
@@ -495,9 +492,7 @@ fragment SimpleEscapeSequence
     :   '\\' ['"?nrtv\\]
     ;
 
-fragment StringLiteral
-    : '"' StringLiteralBody '"'
-    ;
+
 
 fragment StringLiteralBody
     : CharacterLiteralBody*
@@ -505,6 +500,14 @@ fragment StringLiteralBody
 
 fragment BooleanLiteral
     : 'true' | 'false'
+    ;
+
+Digit
+    : [0-9]
+    ;
+
+StringLiteral
+    : '"' StringLiteralBody '"'
     ;
 
 // 3. Operators
@@ -545,6 +548,8 @@ RightShiftEqual : '>>=';
 PlusEqual : '+=';
 MinusEqual : '-=';
 MultEqual : '*=';
+DivEqual : '/=';
+ModEqual : '%=';
 
 
 
