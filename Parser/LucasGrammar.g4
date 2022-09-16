@@ -6,22 +6,7 @@ primaryExpression
     |   Literal
     |   StringLiteral+
     |   '(' expression ')'
-    |   genericSelection
 	//| '__extension__'? '(' (statement | declaration)* ')' // Blocks (GCC extension)
-    |   '__builtin_va_arg' '(' unaryExpression ',' typeName ')'
-    |   '__builtin_offsetof' '(' typeName ',' unaryExpression ')'
-    ;
-
-genericSelection
-    :   '_Generic' '(' assignmentExpression ',' genericAssocList ')'
-    ;
-
-genericAssocList
-    :   genericAssociation (',' genericAssociation)*
-    ;
-
-genericAssociation
-    :   (typeName | 'default') ':' assignmentExpression
     ;
 
 postfixExpression
@@ -45,7 +30,7 @@ unaryExpression
     ('++' |  '--' |  'sizeof')*
     (postfixExpression
     |   unaryOperator castExpression
-    |   ('sizeof' | '_Alignof') '(' typeName ')'
+    |   'sizeof' '(' typeName ')'
     |   '&&' Identifier // GCC extension address of label
     )
     ;
