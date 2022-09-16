@@ -1,0 +1,4 @@
+decl function Haha(int y, bigint z) -> (float x);
+begin function hello()
+    int x = 3I;
+end function

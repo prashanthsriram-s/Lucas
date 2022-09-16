@@ -374,11 +374,11 @@ externalDeclaration
     ;
 
 functionDeclaration
-    : Decl Function Identifier '('parameterTypeList')' (Arrow '('parameterList')')? ';'
+    : Decl Function Identifier '('parameterTypeList?')' (Arrow '('parameterList')')? ';'
     ;
 
 functionDefinition
-    : Begin Function Identifier '('parameterTypeList')' (Arrow '('parameterList')')? (statement|declaration)* End Function Identifier?//declarationSpecifiers? declarator declarationList?Function Identifier '('parameterTypeList')' (Arrow '('parameterList')')?
+    : Begin Function Identifier '('parameterTypeList?')' (Arrow '('parameterList')')? (statement|declaration)* End Function Identifier?//declarationSpecifiers? declarator declarationList?Function Identifier '('parameterTypeList')' (Arrow '('parameterList')')?
     ;
 
 declarationList
