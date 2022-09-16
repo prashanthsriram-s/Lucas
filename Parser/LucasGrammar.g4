@@ -223,16 +223,17 @@ directDeclarator
     :   Identifier
     |   '(' declarator ')'
     |   directDeclarator '[' typeQualifierList? assignmentExpression? ']'
-    |   directDeclarator '[' 'static' typeQualifierList? assignmentExpression ']'
-    |   directDeclarator '[' typeQualifierList 'static' assignmentExpression ']'
+    //|   directDeclarator '[' 'static' typeQualifierList? assignmentExpression ']'
+    //|   directDeclarator '[' typeQualifierList 'static' assignmentExpression ']'
     |   directDeclarator '[' typeQualifierList? '*' ']'
     |   directDeclarator '(' parameterTypeList ')'
     |   directDeclarator '(' identifierList? ')'
     |   Identifier ':' Digit+  // bit field
-    |   vcSpecificModifer Identifier // Visual C Extension
-    |   '(' vcSpecificModifer declarator ')' // Visual C Extension
+    //|   vcSpecificModifer Identifier // Visual C Extension
+    //|   '(' vcSpecificModifer declarator ')' // Visual C Extension
     ;
 
+/* 
 vcSpecificModifer
     :   ('__cdecl' 
     |   '__clrcall' 
@@ -241,7 +242,7 @@ vcSpecificModifer
     |   '__thiscall' 
     |   '__vectorcall') 
     ;
-
+*/
 
 // gccDeclaratorExtension
 //     :   '__asm' '(' StringLiteral+ ')'
@@ -304,13 +305,13 @@ abstractDeclarator
 directAbstractDeclarator
     :   '(' abstractDeclarator ')' //gccDeclaratorExtension*
     |   '[' typeQualifierList? assignmentExpression? ']'
-    |   '[' 'static' typeQualifierList? assignmentExpression ']'
-    |   '[' typeQualifierList 'static' assignmentExpression ']'
+    //|   '[' 'static' typeQualifierList? assignmentExpression ']'
+    //|   '[' typeQualifierList 'static' assignmentExpression ']'
     |   '[' '*' ']'
     |   '(' parameterTypeList? ')' //gccDeclaratorExtension*
     |   directAbstractDeclarator '[' typeQualifierList? assignmentExpression? ']'
-    |   directAbstractDeclarator '[' 'static' typeQualifierList? assignmentExpression ']'
-    |   directAbstractDeclarator '[' typeQualifierList 'static' assignmentExpression ']'
+    //|   directAbstractDeclarator '[' 'static' typeQualifierList? assignmentExpression ']'
+    //|   directAbstractDeclarator '[' typeQualifierList 'static' assignmentExpression ']'
     |   directAbstractDeclarator '[' '*' ']'
     |   directAbstractDeclarator '(' parameterTypeList? ')' //gccDeclaratorExtension*
     ;
