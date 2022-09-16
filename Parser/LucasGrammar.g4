@@ -91,7 +91,6 @@ constantExpression
 
 declaration
     :   declarationSpecifiers initDeclaratorList? ';'
-    |   staticAssertDeclaration
     ;
 
 declarationSpecifiers
@@ -127,7 +126,7 @@ typeSpecifier
     |   'boolean')
     |   structOrUnionSpecifier   //MAKE CLASSESSSSSSSSSSs
     |   classSpecifier 
-    |   typedefName
+    |   Identifier
     ;
 
 classSpecifier
@@ -160,7 +159,6 @@ structDeclarationList
 structDeclaration // The first two rules have priority order and cannot be simplified to one expression.
     :   specifierQualifierList structDeclaratorList ';'
     |   specifierQualifierList ';'
-    |   staticAssertDeclaration
     ;
 
 specifierQualifierList
@@ -280,10 +278,6 @@ directAbstractDeclarator
     |   directAbstractDeclarator '(' parameterTypeList? ')' //gccDeclaratorExtension*
     ;
 
-typedefName
-    :   Identifier
-    ;
-
 initializer
     :   assignmentExpression
     |   '{' initializerList ','? '}'
@@ -304,10 +298,6 @@ designatorList
 designator
     :   '[' constantExpression ']'
     |   '.' Identifier
-    ;
-
-staticAssertDeclaration
-    :   '_Static_assert' '(' constantExpression ',' StringLiteral+ ')' ';'
     ;
 
 statement
