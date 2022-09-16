@@ -142,14 +142,29 @@ typeSpecifier
     |   'float'
     |   'double'
     |   'boolean')
-    |   structOrUnionSpecifier   //MAKE CLASSESSSSSSSSSSs
+    //|   structOrUnionSpecifier   //MAKE CLASSESSSSSSSSSSs
     |   classSpecifier 
     |   Identifier
     ;
 
 classSpecifier
-    : Begin Class Identifier (memberDeclaration | Colon)+ //ADD ACCESS SPECIFIER HERE ACCORDING TO THE C++ GRAMMAR
+    : classDeclaration
+    | classDefinition
     ;
+
+classDeclaration
+    : Decl Class Identifier
+    ;
+
+classDefinition
+    : Begin Class Identifier? (memberDeclaration | accessSpecifier Colon)+ End Class Identifier? //ADD ACCESS SPECIFIER HERE ACCORDING TO THE C++ GRAMMAR
+    ;
+
+accessSpecifier
+    : Public
+    | Private
+    ;
+
 
 memberDeclaration
     : functionDeclaration
@@ -160,19 +175,19 @@ memberDeclaration
 
 
 
-structOrUnionSpecifier
-    :   structOrUnion Identifier? '{' structDeclarationList '}'
-    |   structOrUnion Identifier
-    ;
+// structOrUnionSpecifier
+//     :   structOrUnion Identifier? '{' structDeclarationList '}'
+//     |   structOrUnion Identifier
+//     ;
 
-structOrUnion
-    :   'struct'
-    |   'union'
-    ;
+// structOrUnion
+//     :   'struct'
+//     |   'union'
+//     ;
 
-structDeclarationList
-    :   structDeclaration+
-    ;
+// structDeclarationList
+//     :   structDeclaration+
+//     ;
 
 structDeclaration // The first two rules have priority order and cannot be simplified to one expression.
     :   specifierQualifierList structDeclaratorList ';'

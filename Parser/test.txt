@@ -1,4 +1,16 @@
+begin class Class1
+public:
+    int x;
+    begin function setX(int y)
+        x = y;
+    end function
+    begin function getX() -> (int)
+        return x;
+    end function
+end class;
+
 begin function hello(int x) -> (int)
-    int x = sin(2*x) + cos(log(3*y))*7;
-    return 23;
+    Class1 c1;
+    c1.setX(2);
+    print(c1.getX());
 end function
