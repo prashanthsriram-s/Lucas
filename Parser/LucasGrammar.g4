@@ -85,14 +85,13 @@ mathexpr:
 	| '-'? ('e' | 'E') '-'? mathexpr
 	| mathexpr '+' mathexpr
 	| mathexpr '-' mathexpr
-	| '-'? Literal '*' mathexpr
+	| mathexpr '*' mathexpr
 	| mathexpr 'ceildiv' Literal
 	| mathexpr 'floordiv' Literal
 	| mathexpr 'mod' Literal
 	| '-' mathexpr
 	| Identifier
 	| '-'? Literal
-	//| L
     ;
 
 assignmentOperator
