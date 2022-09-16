@@ -352,7 +352,7 @@ functionDeclaration
     ;
 
 functionDefinition
-    : Begin Function (Identifier|Identifier ClassSpec Identifier) '('parameterTypeList?')' (Arrow '('parameterList?')')? (statement|declaration)* End Function Identifier?//declarationSpecifiers? declarator declarationList?Function Identifier '('parameterTypeList')' (Arrow '('parameterList')')?
+    : Begin Function (Identifier|Identifier ClassSpec Identifier) '('parameterTypeList?')' (Arrow '('parameterList?')')? (statement|declaration)* End Function Identifier? //declarationSpecifiers? declarator declarationList?Function Identifier '('parameterTypeList')' (Arrow '('parameterList')')?
     ;
 
 declarationList
