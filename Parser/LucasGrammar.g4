@@ -74,14 +74,15 @@ logicalOrExpression
 assignmentExpression
     :   logicalOrExpression
     |   unaryExpression assignmentOperator assignmentExpression
-	| Digit+ // for
-	| mathexpr 
+	|   Digit+ // for
+	|   mathexpr 
     ;
 
 mathexpr:
 	'(' mathexpr ')'
 	| TE '(' mathexpr ')'
 	| LE '(' mathexpr ')'
+    | mathexpr '^' mathexpr
 	| '-'? ('e' | 'E') '-'? mathexpr
 	| mathexpr '+' mathexpr
 	| mathexpr '-' mathexpr
@@ -141,6 +142,8 @@ typeSpecifier
     |   'float'
     |   'double'
     |   'boolean')
+    |    Expr
+    //|   structOrUnionSpecifier   //MAKE CLASSESSSSSSSSSSs
     |   classSpecifier 
     |   Identifier
     ;
@@ -399,7 +402,7 @@ functionDeclaration
     ;
 
 functionDefinition
-    : Begin Function Identifier '('parameterTypeList?')' (Arrow '('parameterList?')')? (statement|declaration)* End Function Identifier?//declarationSpecifiers? declarator declarationList?Function Identifier '('parameterTypeList')' (Arrow '('parameterList')')?
+    : Begin Function (Identifier|Identifier ClassSpec Identifier) '('parameterTypeList?')' (Arrow '('parameterList?')')? (statement|declaration)* End Function Identifier?//declarationSpecifiers? declarator declarationList?Function Identifier '('parameterTypeList')' (Arrow '('parameterList')')?
     ;
 
 declarationList
