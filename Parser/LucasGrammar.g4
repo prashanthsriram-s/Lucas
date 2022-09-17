@@ -213,6 +213,7 @@ directDeclarator
     |   directDeclarator '[' typeQualifierList? '*' ']'
     |   directDeclarator '(' parameterTypeList ')'
     |   directDeclarator '(' identifierList? ')'
+    |   directDeclarator '(' argumentExpressionList? ')'
     |   Identifier ':' Digit+  // bit field
     ;
 
